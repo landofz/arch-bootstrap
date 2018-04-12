@@ -136,6 +136,7 @@ arch-chroot /mnt su -c exit -l ${user}
 sed -i -e '/^auth      required  pam_unix.so/aauth      required  pam_ecryptfs.so unwrap' /mnt/etc/pam.d/system-auth
 sed -i -e '/^password  required  pam_unix.so/ipassword  optional  pam_ecryptfs.so' /mnt/etc/pam.d/system-auth
 sed -i -e '/^session   required  pam_unix.so/asession   optional  pam_ecryptfs.so unwrap' /mnt/etc/pam.d/system-auth
+find /mnt/home -name "${user}.*" | xargs rm -rf
 
 ### Install packages ###
 echo "Installing WiFi packages"
