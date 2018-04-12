@@ -130,7 +130,7 @@ passwd --root /mnt -l root
 
 echo "Setting up home encryption"
 modprobe ecryptfs
-arch-chroot /mnt pacman --noconfirm -S --needed ecryptfs-utils rsync lsof
+arch-chroot /mnt pacman --noconfirm -S --needed rsync lsof ecryptfs-utils
 echo "${password}" | arch-chroot /mnt ecryptfs-migrate-home -u ${user}
 arch-chroot /mnt su -c exit -l ${user}
 sed -i -e '/^auth      required  pam_unix.so/aauth      required  pam_ecryptfs.so unwrap' /mnt/etc/pam.d/system-auth
