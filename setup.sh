@@ -68,6 +68,13 @@ pacman --noconfirm -S --needed \
 pacman --noconfirm -S --needed \
     chromium \
     firefox
+echo "Installing documentation packages"
+pacman --noconfirm -S --needed \
+    linux-docs \
+    dbus-docs \
+    freedesktop-docs \
+    xorg-docs \
+    arch-wiki-docs
 
 amixer sset Master unmute
 git clone https://github.com/landofz/dotfiles.git
