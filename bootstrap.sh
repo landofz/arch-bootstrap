@@ -138,9 +138,11 @@ sed -i -e '/^password  required  pam_unix.so/ipassword  optional  pam_ecryptfs.s
 sed -i -e '/^session   required  pam_unix.so/asession   optional  pam_ecryptfs.so unwrap' /mnt/etc/pam.d/system-auth
 find /mnt/home -name "${user}.*" | xargs rm -rf
 
-### Install packages ###
+### Install networking packages ###
+echo "Installing wired networking packages"
+arch-chroot /mnt pacman --noconfirm -S --needed ifplugd
 echo "Installing WiFi packages"
-arch-chroot /mnt pacman --noconfirm -S --needed iw wpa_supplicant dialog
+arch-chroot /mnt pacman --noconfirm -S --needed iw wpa_supplicant dialog wpa_actiond
 
 ### Reboot ###
 echo "Unmounting drives"
