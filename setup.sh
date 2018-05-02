@@ -58,14 +58,23 @@ pacman --noconfirm -S --needed \
     i7z \
     thermald \
     powertop \
+    smartmontools \
     hdparm
 echo "Installing utility packages"
 pacman --noconfirm -S --needed \
     htop \
     links \
     jq \
+    renameutils \
+    run-parts \
+    wmctrl \
+    rsync \
+    lsof \
+    scrot \
+    polkit \
     ufw
 pacman --noconfirm -S --needed \
+    redshift \
     chromium \
     firefox
 echo "Installing documentation packages"
