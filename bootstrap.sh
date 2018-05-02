@@ -83,6 +83,7 @@ mapper_root=/dev/mapper/MyVol-root
 mkfs.ext4 "${mapper_root}"
 part_root_uuid="$(blkid --output value ${part_root} | head -n1)"
 
+echo "Mounting partitions"
 mount "${mapper_root}" /mnt
 mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
@@ -95,10 +96,6 @@ sed -i -e 's/#Server = /Server = /' /etc/pacman.d/mirrorlist
 echo "Installing base system"
 pacstrap /mnt base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
-echo "Created fstab:"
-echo "*** begin fstab ***"
-cat /mnt/etc/fstab
-echo "*** end fstab ***"
 
 echo "Configuring base system"
 echo "${hostname}" > /mnt/etc/hostname
@@ -146,8 +143,9 @@ echo "Installing WiFi packages"
 arch-chroot /mnt pacman --noconfirm -S --needed iw wpa_supplicant dialog wpa_actiond
 
 ### Reboot ###
-echo "Unmounting drives"
+echo "Saving log files"
 cp stdout.log /mnt/root/bootstrap_stdout.log
 cp stderr.log /mnt/root/bootstrap_stderr.log
+echo "Unmounting drives"
 umount -R /mnt
 reboot
