@@ -109,6 +109,7 @@ sed -i -e 's/^#en_US.UTF-8/en_US.UTF-8/' /mnt/etc/locale.gen
 sed -i -e 's/^#hr_HR.UTF-8/hr_HR.UTF-8/' /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
 echo "LANG=hr_HR.UTF-8" > /etc/locale.conf
+sed -i -e 's/issue_discards = 0/issue_discards = 1/' /mnt/etc/lvm/lvm.conf
 
 ### Set up bootloader ###
 echo "Configuring initramfs"
@@ -118,7 +119,7 @@ echo "Setting up bootloader"
 arch-chroot /mnt pacman --noconfirm -S --needed grub
 arch-chroot /mnt grub-install --target=i386-pc "${device}"
 arch-chroot /mnt pacman --noconfirm -S --needed intel-ucode
-sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm root=/dev/mapper/MyVol-root\"#" /mnt/etc/default/grub
+sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm:allow-discards root=/dev/mapper/MyVol-root\"#" /mnt/etc/default/grub
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 ### Set up users ###
