@@ -146,6 +146,18 @@ echo "Installing wired networking packages"
 arch-chroot /mnt pacman --noconfirm -S --needed ifplugd
 echo "Installing WiFi packages"
 arch-chroot /mnt pacman --noconfirm -S --needed iw wpa_supplicant dialog wpa_actiond
+echo "Creating netctl profiles"
+for dev in $(ip -brief link | cut -d" " -f1 | grep "^enp"); do
+    echo "Detected network device: $dev"
+    profile="/mnt/etc/netctl/${dev}_dhcp"
+    if [[ -e "$profile" ]]; then
+        echo "Device $dev already configured"
+        continue
+    fi
+    cp /mnt/etc/netctl/examples/ethernet-dhcp "$profile"
+    sed -i -e "s/Interface=eth0/Interface=$dev/" "$profile"
+    chmod 600 "$profile"
+done
 
 ### Reboot ###
 echo "Saving log files"
