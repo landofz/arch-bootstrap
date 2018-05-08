@@ -19,6 +19,13 @@ if sudo ls /root/bootstrap_stderr.log; then
     sudo chown $USER:$USER ~/bootstrap_stderr.log
 fi
 
+echo "Configuring network profile autostart"
+for dev in $(ip -brief link | cut -d" " -f1 | grep "^enp"); do
+    echo "Detected network device: $dev"
+    sudo systemctl enable "netctl-ifplugd@$dev.service"
+    sudo systemctl start "netctl-ifplugd@$dev.service"
+done
+
 echo "Setting NTP"
 sudo pacman --noconfirm -S --needed chrony
 sudo sed -i -e '/! pool 3.arch/a pool pool.ntp.org offline' /etc/chrony.conf
