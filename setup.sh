@@ -9,6 +9,16 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 exec 1> >(tee "setup_stdout.log")
 exec 2> >(tee "setup_stderr.log")
 
+echo "Saving bootstrap log files"
+if sudo ls /root/bootstrap_stdout.log; then
+    sudo mv /root/bootstrap_stdout.log ~/bootstrap_stdout.log
+    sudo chown $USER:$USER ~/bootstrap_stdout.log
+fi
+if sudo ls /root/bootstrap_stderr.log; then
+    sudo mv /root/bootstrap_stderr.log ~/bootstrap_stderr.log
+    sudo chown $USER:$USER ~/bootstrap_stderr.log
+fi
+
 echo "Setting NTP"
 sudo pacman --noconfirm -S --needed chrony
 sudo sed -i -e '/! pool 3.arch/a pool pool.ntp.org offline' /etc/chrony.conf
