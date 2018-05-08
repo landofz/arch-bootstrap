@@ -86,7 +86,11 @@ sudo pacman --noconfirm -S --needed \
     thermald \
     powertop \
     smartmontools \
-    hdparm
+    hdparm \
+    ethtool \
+    tlp \
+    acpi_call \
+    tp_smapi
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
     htop \
