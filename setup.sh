@@ -31,7 +31,7 @@ sudo chronyc makestep
 
 ### Install packages ###
 echo "Installing core packages"
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     git \
     bash-completion \
     stow \
@@ -40,11 +40,11 @@ pacman --noconfirm -S --needed \
     neovim
 echo "Installing graphics packages"
 # test if we need to install xf86-video-intel as well
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     xf86-video-vesa \
     mesa \
     vulkan-intel
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     xorg-server \
     xorg-xinit \
     xorg-xrdb \
@@ -60,16 +60,16 @@ pacman --noconfirm -S --needed \
     xorg-xmodmap \
     xorg-fonts-100dpi \
     xdotool
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     i3 \
     rxvt-unicode \
     rofi
 echo "Installing audio packages"
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     alsa-utils \
     pulseaudio
 echo "Installing power management packages"
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     acpid \
     lm_sensors \
     cpupower \
@@ -79,7 +79,7 @@ pacman --noconfirm -S --needed \
     smartmontools \
     hdparm
 echo "Installing utility packages"
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     htop \
     links \
     jq \
@@ -91,12 +91,12 @@ pacman --noconfirm -S --needed \
     scrot \
     polkit \
     ufw
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     redshift \
     chromium \
     firefox
 echo "Installing documentation packages"
-pacman --noconfirm -S --needed \
+sudo pacman --noconfirm -S --needed \
     linux-docs \
     dbus-docs \
     freedesktop-docs \
