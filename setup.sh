@@ -39,7 +39,7 @@ sudo pacman --noconfirm -S --needed \
     vim \
     neovim
 echo "Installing graphics packages"
-# test if we need to install xf86-video-intel as well
+# TODO test if we need to install xf86-video-intel as well
 sudo pacman --noconfirm -S --needed \
     xf86-video-vesa \
     mesa \
@@ -69,6 +69,8 @@ sudo pacman --noconfirm -S --needed \
     alsa-utils \
     pulseaudio
 echo "Installing power management packages"
+# We don't install anything for fan speed control at the moment because on
+# ThinkPads it is handled by EC automatically.
 sudo pacman --noconfirm -S --needed \
     acpid \
     lm_sensors \
