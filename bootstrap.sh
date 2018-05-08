@@ -29,6 +29,12 @@ devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
 device=$(dialog --stdout --menu "Select installtion disk" 0 0 0 ${devicelist}) || exit 1
 clear
 
+wipe_disk=0
+if dialog --stdout --clear --yesno "Wipe disk?" 0 0; then
+    wipe_disk=1
+fi
+clear
+
 ### Set up logging ###
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
@@ -64,13 +70,12 @@ part_root="$(ls ${device}* | grep -E "^${device}p?2$")"
 mkfs.ext2 "${part_boot}"
 
 ### Wipe disk ###
-if dialog --stdout --clear --yesno "Wipe disk?" 0 0; then
+if [[ "$wipe_disk" == "1" ]]; then
     echo "Wiping disk"
     cryptsetup open --type plain "${part_root}" container --key-file /dev/random
     dd if=/dev/zero of=/dev/mapper/container status=progress
     cryptsetup close container
 fi
-clear
 
 ### Set up disk encryption ###
 echo "Setting disk encryption"
