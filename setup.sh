@@ -9,7 +9,15 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 exec 1> >(tee "setup_stdout.log")
 exec 2> >(tee "setup_stderr.log")
 
-timedatectl set-ntp true
+echo "Setting NTP"
+sudo pacman --noconfirm -S --needed chrony
+sudo sed -i -e '/! pool 3.arch/a pool pool.ntp.org offline' /etc/chrony.conf
+sudo sed -i -e 's/! maxupdateskew 100/maxupdateskew 100/' /etc/chrony.conf
+sudo systemctl disable systemd-timesyncd.service
+sudo systemctl enable chronyd.service
+sudo systemctl start chronyd.service
+sudo chronyc online
+sudo chronyc makestep
 
 ### Install packages ###
 echo "Installing core packages"
