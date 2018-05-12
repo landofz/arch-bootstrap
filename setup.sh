@@ -148,6 +148,7 @@ sudo pacman --noconfirm -S --needed \
     lsof \
     scrot \
     tldr \
+    xsel \
     ufw
 sudo pacman --noconfirm -S --needed \
     redshift \
