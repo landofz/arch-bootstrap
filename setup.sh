@@ -110,6 +110,9 @@ sudo pacman --noconfirm -S --needed \
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
     htop \
+    iftop \
+    iotop \
+    dstat \
     links \
     jq \
     renameutils \
@@ -118,10 +121,11 @@ sudo pacman --noconfirm -S --needed \
     rsync \
     lsof \
     scrot \
-    polkit \
+    tldr \
     ufw
 sudo pacman --noconfirm -S --needed \
     redshift \
+    gimp \
     chromium \
     firefox
 echo "Installing documentation packages"
