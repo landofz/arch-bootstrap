@@ -110,7 +110,7 @@ arch-chroot /mnt hwclock --systohc
 sed -i -e 's/^#en_US.UTF-8/en_US.UTF-8/' /mnt/etc/locale.gen
 sed -i -e 's/^#hr_HR.UTF-8/hr_HR.UTF-8/' /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
-echo "LANG=hr_HR.UTF-8" > /etc/locale.conf
+echo "LANG=hr_HR.UTF-8" > /mnt/etc/locale.conf
 sed -i -e 's/issue_discards = 0/issue_discards = 1/' /mnt/etc/lvm/lvm.conf
 
 ### Set up bootloader ###
