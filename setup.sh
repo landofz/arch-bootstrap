@@ -140,6 +140,8 @@ sudo pacman --noconfirm -S --needed \
     arch-wiki-docs
 
 amixer sset Master unmute
+systemctl enable fstrim.timer
+sudo sensors-detect
 
 pacman -Qqe > installed_packages.txt
 git clone https://github.com/landofz/dotfiles.git
