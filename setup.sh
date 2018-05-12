@@ -10,11 +10,11 @@ exec 1> >(tee "setup_stdout.log")
 exec 2> >(tee "setup_stderr.log")
 
 echo "Saving bootstrap log files"
-if sudo ls /root/bootstrap_stdout.log; then
+if sudo ls /root/bootstrap_stdout.log 2>/dev/null; then
     sudo mv /root/bootstrap_stdout.log ~/bootstrap_stdout.log
     sudo chown $USER:$USER ~/bootstrap_stdout.log
 fi
-if sudo ls /root/bootstrap_stderr.log; then
+if sudo ls /root/bootstrap_stderr.log 2>/dev/null; then
     sudo mv /root/bootstrap_stderr.log ~/bootstrap_stderr.log
     sudo chown $USER:$USER ~/bootstrap_stderr.log
 fi
