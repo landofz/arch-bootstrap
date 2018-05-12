@@ -32,6 +32,13 @@ if ! ping -c 2 google.com; then
     exit 1
 fi
 
+echo "Setting AUR helper"
+mkdir ~/src
+git clone https://aur.archlinux.org/yay.git ~/src/yay
+pushd ~/src/yay
+makepkg -si
+popd
+
 echo "Setting NTP"
 sudo pacman --noconfirm -S --needed chrony
 sudo sed -i -e '/! pool 3.arch/a pool pool.ntp.org offline' /etc/chrony.conf
