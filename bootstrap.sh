@@ -42,7 +42,8 @@ exec 2> >(tee "stderr.log")
 ### Set up networking ###
 echo "Checking networking"
 if ! ping -c 2 google.com; then
-    use_wifi=$(dialog --stdout --clear --yesno "Use WiFi?" 0 0) || exit 1
+    use_wifi=$(dialog --stdout --clear --yesno "No network connectivity. Use WiFi?" 0 0) || exit 1
+    clear
     if [ "$use_wifi" ]; then
         wifi-menu -o
     fi
