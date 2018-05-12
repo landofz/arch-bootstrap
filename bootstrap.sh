@@ -44,7 +44,7 @@ echo "Checking networking"
 if ! ping -c 2 google.com; then
     use_wifi=$(dialog --stdout --clear --yesno "Use WiFi?" 0 0) || exit 1
     if [ "$use_wifi" ]; then
-        wifi-menu
+        wifi-menu -o
     fi
     if ! ping -c 2 google.com; then
         echo "Could not connect to net"
