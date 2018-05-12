@@ -122,9 +122,17 @@ sudo pacman --noconfirm -S --needed \
     smartmontools \
     hdparm \
     ethtool \
-    tlp \
     acpi_call \
-    tp_smapi
+    tp_smapi \
+    x86_energy_perf_policy \
+    lsb-release \
+    tlp
+sudo sed -i -e '/#STOP_CHARGE_THRESH_BAT1=80/a START_CHARGE_THRESH_BAT1=40\nSTOP_CHARGE_THRESH_BAT1=80' /etc/default/tlp
+sudo systemctl enable tlp.service
+sudo systemctl enable tlp-sleep.service
+sudo systemctl mask systemd-rfkill.service
+sudo systemctl mask systemd-rfkill.socket
+sudo systemctl mask NetworkManager.service || true
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
     htop \
