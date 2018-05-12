@@ -26,6 +26,12 @@ for dev in $(ip -brief link | cut -d" " -f1 | grep "^enp"); do
     sudo systemctl start "netctl-ifplugd@$dev.service"
 done
 
+echo "Checking networking"
+if ! ping -c 2 google.com; then
+    echo "Could not connect to net"
+    exit 1
+fi
+
 echo "Setting NTP"
 sudo pacman --noconfirm -S --needed chrony
 sudo sed -i -e '/! pool 3.arch/a pool pool.ntp.org offline' /etc/chrony.conf
