@@ -1,7 +1,21 @@
 #!/bin/bash
 # TODO up network interfaces
-# TODO configure and start needed services
+# TODO configure and start needed services:
+#    acpid, thermald, smartd, tlp
 # TODO finish power management
+# TODO udisks2, upower, uuidd
+# TODO backlight - acpilight
+# TODO autofs
+# TODO xsecurelock, xss-lock
+# TODO setup delayed hibernation
+# TODO install haveged for entropy generation
+# TODO polkit so user can reboot or poweroff
+# TODO hardware video acceleration (va-api)
+# TODO profile-sync-daemon
+# TODO pdnsd or other dns caching server
+# TODO weekly SSD trim (and LUKS allow_discards option or in crypttab and LVM issue_discards config)
+# TODO cronie
+# TODO powerline fonts
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -60,6 +74,7 @@ sudo pacman --noconfirm -S --needed \
     tmux \
     vim \
     neovim
+# TODO install vundle.vim, and tpm
 echo "Installing graphics packages"
 # TODO test if we need to install xf86-video-intel as well
 sudo pacman --noconfirm -S --needed \
