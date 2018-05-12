@@ -48,6 +48,7 @@ sudo systemctl enable chronyd.service
 sudo systemctl start chronyd.service
 sudo chronyc online
 sudo chronyc makestep
+yay -S netctl-dispatcher-chrony
 
 ### Install packages ###
 echo "Installing core packages"
