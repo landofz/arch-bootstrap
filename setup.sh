@@ -68,7 +68,10 @@ sudo pacman --noconfirm -S --needed \
     xorg-fonts-100dpi \
     xdotool
 sudo pacman --noconfirm -S --needed \
-    i3 \
+    i3-wm \
+    i3blocks \
+    i3lock \
+    i3status \
     rxvt-unicode \
     rofi
 echo "Installing audio packages"
