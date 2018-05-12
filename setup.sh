@@ -56,6 +56,7 @@ sudo pacman --noconfirm -S --needed \
     git \
     bash-completion \
     stow \
+    python \
     tmux \
     vim \
     neovim
@@ -100,6 +101,7 @@ sudo pacman --noconfirm -S --needed \
     lm_sensors \
     cpupower \
     i7z \
+    hddtemp \
     thermald \
     powertop \
     smartmontools \
