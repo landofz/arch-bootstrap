@@ -121,3 +121,12 @@ sudo pacman --noconfirm -S --needed \
 
 amixer sset Master unmute
 git clone https://github.com/landofz/dotfiles.git
+popd dotfiles
+rm ~/.bashrc
+stow -t ~/ bash
+source ~/.bashrc
+stow -t ~/ vim
+stow -t ~/ x11
+stow -t ~/ urxvt
+stow -t ~/ tmux
+stow -t ~/ i3
