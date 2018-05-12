@@ -140,6 +140,8 @@ sudo pacman --noconfirm -S --needed \
     arch-wiki-docs
 
 amixer sset Master unmute
+
+pacman -Qqe > installed_packages.txt
 git clone https://github.com/landofz/dotfiles.git
 popd dotfiles
 rm ~/.bashrc
