@@ -7,6 +7,7 @@
 # TODO backlight - acpilight
 # TODO autofs
 # TODO xsecurelock, xss-lock
+# TODO dunst
 # TODO setup delayed hibernation
 # TODO install haveged for entropy generation
 # TODO polkit so user can reboot or poweroff
