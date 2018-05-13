@@ -133,6 +133,11 @@ sudo systemctl enable tlp-sleep.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 sudo systemctl mask NetworkManager.service || true
+echo "Installing security packages"
+sudo pacman --noconfirm -S --needed \
+    xscreensaver \
+    xss-lock
+yay -S xsecurelock-git
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
     htop \
