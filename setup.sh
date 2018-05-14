@@ -1,12 +1,11 @@
 #!/bin/bash
 # TODO up network interfaces
 # TODO configure and start needed services:
-#    acpid, thermald, smartd, tlp
+#    acpid
 # TODO finish power management
 # TODO udisks2, upower, uuidd
 # TODO backlight - acpilight
 # TODO autofs
-# TODO xsecurelock, xss-lock
 # TODO dunst
 # TODO setup delayed hibernation
 # TODO install haveged for entropy generation
@@ -14,9 +13,9 @@
 # TODO hardware video acceleration (va-api)
 # TODO profile-sync-daemon
 # TODO pdnsd or other dns caching server
-# TODO weekly SSD trim (and LUKS allow_discards option or in crypttab and LVM issue_discards config)
 # TODO cronie
 # TODO powerline fonts
+# TODO firewall
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
