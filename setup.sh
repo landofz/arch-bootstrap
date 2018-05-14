@@ -76,6 +76,7 @@ sudo pacman --noconfirm -S --needed \
     vim \
     neovim
 # TODO install vundle.vim, and tpm
+
 echo "Installing graphics packages"
 # TODO test if we need to install xf86-video-intel as well
 sudo pacman --noconfirm -S --needed \
@@ -105,10 +106,12 @@ sudo pacman --noconfirm -S --needed \
     i3status \
     rxvt-unicode \
     rofi
+
 echo "Installing audio packages"
 sudo pacman --noconfirm -S --needed \
     alsa-utils \
     pulseaudio
+
 echo "Installing power management packages"
 # We don't install anything for fan speed control at the moment because on
 # ThinkPads it is handled by EC automatically.
@@ -134,11 +137,13 @@ sudo systemctl enable tlp-sleep.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 sudo systemctl mask NetworkManager.service || true
+
 echo "Installing security packages"
 sudo pacman --noconfirm -S --needed \
     xscreensaver \
     xss-lock
 yay -S xsecurelock-git
+
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
     htop \
@@ -161,6 +166,7 @@ sudo pacman --noconfirm -S --needed \
     gimp \
     chromium \
     firefox
+
 echo "Installing documentation packages"
 sudo pacman --noconfirm -S --needed \
     linux-docs \
