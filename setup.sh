@@ -8,7 +8,6 @@
 # TODO autofs
 # TODO dunst
 # TODO setup delayed hibernation
-# TODO install haveged for entropy generation
 # TODO polkit so user can reboot or poweroff
 # TODO hardware video acceleration (va-api)
 # TODO profile-sync-daemon
@@ -148,8 +147,11 @@ sudo systemctl start thermald.service
 echo "Installing security packages"
 sudo pacman --noconfirm -S --needed \
     xscreensaver \
-    xss-lock
+    xss-lock \
+    rng-tools
 yay -S xsecurelock-git
+sudo systemctl enable rngd.service
+sudo systemctl start rngd.service
 
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
