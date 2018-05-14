@@ -143,6 +143,8 @@ sudo sed -i -e '/^DEVICESCAN$/a DEVICESCAN -d removable -n standby' /etc/smartd.
 sudo sed -i -e 's/^DEVICESCAN$/#DEVICESCAN/' /etc/smartd.conf
 sudo systemctl enable smartd.service
 sudo systemctl start smartd.service
+sudo systemctl enable thermald.service
+sudo systemctl start thermald.service
 
 echo "Installing security packages"
 sudo pacman --noconfirm -S --needed \
