@@ -139,6 +139,10 @@ sudo systemctl start tlp-sleep.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 sudo systemctl mask NetworkManager.service || true
+sudo sed -i -e '/^DEVICESCAN$/a DEVICESCAN -d removable -n standby' /etc/smartd.conf
+sudo sed -i -e 's/^DEVICESCAN$/#DEVICESCAN/' /etc/smartd.conf
+sudo systemctl enable smartd.service
+sudo systemctl start smartd.service
 
 echo "Installing security packages"
 sudo pacman --noconfirm -S --needed \
