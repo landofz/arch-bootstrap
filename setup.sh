@@ -56,14 +56,16 @@ sudo pacman --noconfirm -S --needed \
     neovim
 # TODO install vundle.vim, and tpm
 
-echo "Setting AUR helper"
-sudo pacman --noconfirm -S --needed \
-    go
-mkdir -p ~/src
-git clone https://aur.archlinux.org/yay.git ~/src/yay
-pushd ~/src/yay
-makepkg -si --noconfirm
-popd
+if ! command -v yay > /dev/null; then
+    echo "Setting AUR helper"
+    sudo pacman --noconfirm -S --needed \
+        go
+    mkdir -p ~/src
+    git clone https://aur.archlinux.org/yay.git ~/src/yay
+    pushd ~/src/yay
+    makepkg -si --noconfirm
+    popd
+fi
 
 echo "Setting NTP"
 sudo pacman --noconfirm -S --needed chrony
