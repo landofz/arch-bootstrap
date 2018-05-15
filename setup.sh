@@ -189,12 +189,12 @@ sudo pacman --noconfirm -S --needed \
     arch-wiki-docs
 
 amixer sset Master unmute
-systemctl enable fstrim.timer
-sudo sensors-detect
+sudo systemctl enable fstrim.timer
+sudo sensors-detect --auto
 
 pacman -Qqe > installed_packages.txt
 git clone https://github.com/landofz/dotfiles.git
-popd dotfiles
+pushd dotfiles
 rm ~/.bashrc
 stow -t ~/ bash
 source ~/.bashrc
@@ -203,3 +203,4 @@ stow -t ~/ x11
 stow -t ~/ urxvt
 stow -t ~/ tmux
 stow -t ~/ i3
+popd
