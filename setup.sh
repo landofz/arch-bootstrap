@@ -45,11 +45,24 @@ if ! ping -c 2 google.com; then
     exit 1
 fi
 
+echo "Installing core packages"
+sudo pacman --noconfirm -S --needed \
+    git \
+    bash-completion \
+    stow \
+    python \
+    tmux \
+    vim \
+    neovim
+# TODO install vundle.vim, and tpm
+
 echo "Setting AUR helper"
-mkdir ~/src
+sudo pacman --noconfirm -S --needed \
+    go
+mkdir -p ~/src
 git clone https://aur.archlinux.org/yay.git ~/src/yay
 pushd ~/src/yay
-makepkg -si
+makepkg -si --noconfirm
 popd
 
 echo "Setting NTP"
@@ -64,17 +77,6 @@ sudo chronyc makestep
 yay -S netctl-dispatcher-chrony
 
 ### Install packages ###
-echo "Installing core packages"
-sudo pacman --noconfirm -S --needed \
-    git \
-    bash-completion \
-    stow \
-    python \
-    tmux \
-    vim \
-    neovim
-# TODO install vundle.vim, and tpm
-
 echo "Installing graphics packages"
 # TODO test if we need to install xf86-video-intel as well
 sudo pacman --noconfirm -S --needed \
