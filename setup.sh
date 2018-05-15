@@ -76,7 +76,7 @@ sudo systemctl enable chronyd.service
 sudo systemctl start chronyd.service
 sudo chronyc online
 sudo chronyc makestep
-yay -S --noconfirm netctl-dispatcher-chrony
+yay -S --noconfirm --needed netctl-dispatcher-chrony
 
 ### Install packages ###
 echo "Installing graphics packages"
@@ -153,7 +153,7 @@ sudo pacman --noconfirm -S --needed \
     xscreensaver \
     xss-lock \
     rng-tools
-yay -S xsecurelock-git
+yay -S --noconfirm --needed xsecurelock-git
 sudo systemctl enable rngd.service
 sudo systemctl start rngd.service
 
