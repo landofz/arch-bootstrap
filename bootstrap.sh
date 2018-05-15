@@ -27,6 +27,8 @@ clear
 
 devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
 device=$(dialog --stdout --menu "Select installtion disk" 0 0 0 ${devicelist}) || exit 1
+device_size=$(fdisk -l | grep "Disk" | grep "${device}" | cut -d" " -f5)
+forty_gb=40000000000
 clear
 
 wipe_disk=0
@@ -84,15 +86,28 @@ echo "${drive_password}" | cryptsetup luksFormat --type luks2 "${part_root}"
 echo "${drive_password}" | cryptsetup open "${part_root}" cryptolvm
 pvcreate /dev/mapper/cryptolvm
 vgcreate MyVol /dev/mapper/cryptolvm
-lvcreate -l 100%FREE MyVol -n root
+if [[ "${device_size}" -le "${forty_gb}" ]]; then
+    lvcreate -l 100%FREE MyVol -n root
+else
+    lvcreate -L 30G MyVol -n root
+    lvcreate -l 100%FREE MyVol -n home
+fi
 mapper_root=/dev/mapper/MyVol-root
 mkfs.ext4 "${mapper_root}"
 part_root_uuid="$(blkid --output value ${part_root} | head -n1)"
+if [[ "${device_size}" -gt "${forty_gb}" ]]; then
+    mapper_home=/dev/mapper/MyVol-home
+    mkfs.ext4 "${mapper_home}"
+fi
 
 echo "Mounting partitions"
 mount "${mapper_root}" /mnt
 mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
+if [[ "${device_size}" -gt "${forty_gb}" ]]; then
+    mkdir /mnt/home
+    mount "${mapper_home}" /mnt/home
+fi
 
 ### Install and configure the basic system ###
 echo "Generating mirror list"
