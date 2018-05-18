@@ -199,6 +199,10 @@ sudo systemctl enable fstrim.timer
 sudo sensors-detect --auto
 
 pacman -Qqe > installed_packages.txt
+
+mkdir -p .config
+mkdir -p .local/share/applications
+mkdir -p .local/share/icons
 git clone https://github.com/landofz/dotfiles.git
 pushd dotfiles
 rm ~/.bashrc
