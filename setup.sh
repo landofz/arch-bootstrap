@@ -204,6 +204,7 @@ mkdir -p .config
 mkdir -p .local/share/applications
 mkdir -p .local/share/icons
 git clone https://github.com/landofz/dotfiles.git
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 pushd dotfiles
 rm ~/.bashrc
 stow -t ~/ bash
