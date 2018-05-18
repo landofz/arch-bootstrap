@@ -6,7 +6,6 @@
 # TODO udisks2, upower, uuidd
 # TODO backlight - acpilight
 # TODO autofs
-# TODO dunst
 # TODO setup delayed hibernation
 # TODO polkit so user can reboot or poweroff
 # TODO hardware video acceleration (va-api)
@@ -107,7 +106,9 @@ sudo pacman --noconfirm -S --needed \
     i3lock \
     i3status \
     rxvt-unicode \
-    rofi
+    rofi \
+    dunst \
+    libnotify
 
 echo "Installing audio packages"
 sudo pacman --noconfirm -S --needed \
@@ -214,4 +215,5 @@ stow -t ~/ x11
 stow -t ~/ urxvt
 stow -t ~/ tmux
 stow -t ~/ i3
+stow -t ~/ dunst
 popd
