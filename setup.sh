@@ -181,6 +181,11 @@ sudo pacman --noconfirm -S --needed \
     chromium \
     firefox
 
+echo "Installing font packages"
+sudo pacman --noconfirm -S --needed \
+    ttf-font-awesome
+yay -S --noconfirm --needed ttf-ubuntu-mono-derivative-powerline-git
+
 echo "Installing documentation packages"
 sudo pacman --noconfirm -S --needed \
     linux-docs \
