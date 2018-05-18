@@ -173,6 +173,7 @@ sudo pacman --noconfirm -S --needed \
     scrot \
     tldr \
     xsel \
+    archiso \
     ufw
 sudo pacman --noconfirm -S --needed \
     redshift \
