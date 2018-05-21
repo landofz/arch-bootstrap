@@ -13,7 +13,6 @@
 # TODO pdnsd or other dns caching server
 # TODO cronie
 # TODO powerline fonts
-# TODO firewall
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -153,10 +152,15 @@ echo "Installing security packages"
 sudo pacman --noconfirm -S --needed \
     xscreensaver \
     xss-lock \
-    rng-tools
+    rng-tools \
+    ufw
 yay -S --noconfirm --needed xsecurelock-git
 sudo systemctl enable rngd.service
 sudo systemctl start rngd.service
+sudo systemctl enable ufw.service
+sudo systemctl start ufw.service
+sudo ufw default deny
+sudo ufw enable
 
 echo "Installing utility packages"
 sudo pacman --noconfirm -S --needed \
