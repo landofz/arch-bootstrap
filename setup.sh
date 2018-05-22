@@ -188,6 +188,7 @@ sudo pacman --noconfirm -S --needed \
     redshift \
     gimp \
     chromium \
+    qutebrowser \
     firefox
 
 echo "Installing font packages"
