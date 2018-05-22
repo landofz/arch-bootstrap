@@ -114,7 +114,9 @@ sudo pacman --noconfirm -S --needed \
 echo "Installing audio packages"
 sudo pacman --noconfirm -S --needed \
     alsa-utils \
-    pulseaudio
+    pulseaudio \
+    pulseaudio-alsa \
+    pavucontrol
 
 echo "Installing power management packages"
 # We don't install anything for fan speed control at the moment because on
