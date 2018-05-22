@@ -179,6 +179,8 @@ sudo pacman --noconfirm -S --needed \
     tldr \
     xsel \
     archiso \
+    lshw \
+    dmidecode \
     ufw
 sudo pacman --noconfirm -S --needed \
     redshift \
