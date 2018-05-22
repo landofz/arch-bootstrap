@@ -4,7 +4,6 @@
 #    acpid
 # TODO finish power management
 # TODO udisks2, upower, uuidd
-# TODO backlight - acpilight
 # TODO autofs
 # TODO setup delayed hibernation
 # TODO polkit so user can reboot or poweroff
@@ -99,6 +98,7 @@ sudo pacman --noconfirm -S --needed \
     xorg-xmodmap \
     xorg-fonts-100dpi \
     xdotool
+yay -S --noconfirm --needed acpilight
 sudo pacman --noconfirm -S --needed \
     i3-wm \
     i3blocks \
