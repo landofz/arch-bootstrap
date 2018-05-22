@@ -12,6 +12,8 @@
 # TODO pdnsd or other dns caching server
 # TODO cronie
 # TODO powerline fonts
+# TODO xf86-input-libinput
+# TODO vdirsyncer, khal, khard
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
