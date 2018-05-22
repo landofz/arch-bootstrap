@@ -184,6 +184,7 @@ for dev in $(ip -brief link | cut -d" " -f1 | grep "^enp"); do
     sed -i -e "s/Interface=eth0/Interface=$dev/" "$profile"
     chmod 600 "$profile"
 done
+find /etc/netctl -type f -name "wl*" | xargs --no-run-if-empty -I '{}' cp {} /mnt{}
 
 ### Reboot ###
 echo "Saving log files"
