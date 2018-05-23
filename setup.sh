@@ -14,6 +14,7 @@
 # TODO powerline fonts
 # TODO xf86-input-libinput
 # TODO vdirsyncer, khal, khard
+# TODO pipenv
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -50,6 +51,7 @@ sudo pacman --noconfirm -S --needed \
     bash-completion \
     stow \
     python \
+    python-pip \
     tmux \
     vim \
     neovim
