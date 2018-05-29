@@ -11,10 +11,12 @@
 # TODO profile-sync-daemon
 # TODO pdnsd or other dns caching server
 # TODO cronie
-# TODO powerline fonts
-# TODO xf86-input-libinput
+# TODO powerline fonts, check font rendering
+# TODO xf86-input-libinput, libinput
 # TODO vdirsyncer, khal, khard
 # TODO pipenv
+# TODO docker, docker-compose, virtualbox
+# TODO fzf, ripgrep, z.sh
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
