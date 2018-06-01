@@ -16,7 +16,7 @@
 # TODO vdirsyncer, khal, khard
 # TODO pipenv
 # TODO docker, docker-compose, virtualbox
-# TODO fzf, ripgrep, z.sh
+# TODO ripgrep, z.sh
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -175,7 +175,7 @@ sudo pacman --noconfirm -S --needed \
     iftop \
     iotop \
     dstat \
-    links \
+    lynx \
     jq \
     renameutils \
     run-parts \
@@ -188,6 +188,10 @@ sudo pacman --noconfirm -S --needed \
     archiso \
     lshw \
     dmidecode \
+    openbsd-netcat \
+    xz \
+    the_silver_searcher \
+    fzf \
     ufw
 sudo pacman --noconfirm -S --needed \
     redshift \
@@ -233,4 +237,5 @@ stow -t ~/ urxvt
 stow -t ~/ tmux
 stow -t ~/ i3
 stow -t ~/ dunst
+stow -t ~/ fzf
 popd
