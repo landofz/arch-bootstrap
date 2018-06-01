@@ -57,7 +57,6 @@ sudo pacman --noconfirm -S --needed \
     tmux \
     vim \
     neovim
-# TODO install vundle.vim, and tpm
 
 if ! command -v yay > /dev/null; then
     echo "Setting AUR helper"
@@ -219,8 +218,11 @@ pacman -Qqe > installed_packages.txt
 mkdir -p .config
 mkdir -p .local/share/applications
 mkdir -p .local/share/icons
+mkdir -p .vim/bundle
+mkdir -p .tmux/plugins
 git clone https://github.com/landofz/dotfiles.git
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 pushd dotfiles
 rm ~/.bashrc
 stow -t ~/ bash
