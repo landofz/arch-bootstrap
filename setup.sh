@@ -226,7 +226,7 @@ mkdir -p .vim/bundle
 mkdir -p .tmux/plugins
 git clone https://github.com/landofz/dotfiles.git
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 pushd dotfiles
 rm ~/.bashrc
 stow -t ~/ bash
