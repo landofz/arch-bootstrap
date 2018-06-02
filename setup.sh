@@ -3,7 +3,7 @@
 # TODO configure and start needed services:
 #    acpid
 # TODO finish power management
-# TODO udisks2, upower, uuidd
+# TODO udisks2, upower
 # TODO autofs
 # TODO setup delayed hibernation
 # TODO polkit so user can reboot or poweroff
@@ -16,7 +16,8 @@
 # TODO vdirsyncer, khal, khard
 # TODO pipenv
 # TODO docker, docker-compose, virtualbox
-# TODO ripgrep, z.sh
+# TODO ripgrep, z.sh, up.sh
+# TODO gvm, virtualenv, virtualenvwrapper
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
