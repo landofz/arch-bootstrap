@@ -220,6 +220,10 @@ sudo sensors-detect --auto
 
 pacman -Qqe > installed_packages.txt
 
+mkdir -p bin
+mkdir -p lib
+git clone https://github.com/shannonmoeller/up.git ~/lib/up
+
 mkdir -p .config
 mkdir -p .local/share/applications
 mkdir -p .local/share/icons
