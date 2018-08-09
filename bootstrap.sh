@@ -137,6 +137,7 @@ echo "LC_NUMERIC=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_PAPER=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TELEPHONE=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TIME=hr_HR.UTF-8" >> /mnt/etc/locale.conf
+echo "a4" >> /mnt/etc/papersize
 sed -i -e 's/issue_discards = 0/issue_discards = 1/' /mnt/etc/lvm/lvm.conf
 
 ### Set up bootloader ###
