@@ -1,23 +1,25 @@
 #!/bin/bash
-# TODO up network interfaces
 # TODO configure and start needed services:
 #    acpid
 # TODO finish power management
 # TODO udisks2, upower
 # TODO autofs
 # TODO setup delayed hibernation
-# TODO polkit so user can reboot or poweroff
+# TODO polkit
 # TODO hardware video acceleration (va-api)
 # TODO profile-sync-daemon
 # TODO pdnsd or other dns caching server
-# TODO cronie
-# TODO powerline fonts, check font rendering
+# TODO cronie, anacron
+# TODO powerline fonts, nerd fonts, check font rendering
 # TODO xf86-input-libinput, libinput
 # TODO vdirsyncer, khal, khard
 # TODO pipenv
 # TODO docker, docker-compose, virtualbox
 # TODO ripgrep, z.sh, up.sh
 # TODO gvm, virtualenv, virtualenvwrapper
+# TODO tig, zathura, command-not-found, zeal, diffoscope, syndaemon
+# TODO gpg-agent, ssh-agent, bluetooth, mtp
+# TODO cups, rsyslogd, irqbalance, haveged
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
