@@ -182,9 +182,11 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 ### Set up users ###
 echo "Setting up users"
 arch-chroot /mnt useradd -mU "${user}"
-echo "${user}:${password}" | chpasswd --root /mnt
+#echo "${user}:${password}" | chpasswd --root /mnt
+echo "${user}:${password}" | arch-chroot /mnt chpasswd
 echo "${user} ALL=(ALL:ALL) ALL" > /mnt/etc/sudoers.d/10_${user}
-passwd --root /mnt -l root
+#passwd --root /mnt -l root
+arch-chroot /mnt passwd -l root
 
 arch-chroot /mnt pacman --noconfirm -S --needed rsync lsof ecryptfs-utils
 if [[ "$setup_disk" == "1" ]]; then
