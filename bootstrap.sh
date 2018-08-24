@@ -18,24 +18,36 @@ password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || e
 clear
 [[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
-drive_password=$(dialog --stdout --passwordbox "Enter disk encryption password" 0 0) || exit 1
-clear
-: ${drive_password:?"disk encryption password cannot be empty"}
-drive_password2=$(dialog --stdout --passwordbox "Enter disk encryption password again" 0 0) || exit 1
-clear
-[[ "$drive_password" == "$drive_password2" ]] || ( echo "Passwords did not match"; exit 1; )
-
-devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
-device=$(dialog --stdout --menu "Select installtion disk" 0 0 0 ${devicelist}) || exit 1
-device_size=$(fdisk -l | grep "Disk" | grep "${device}" | cut -d" " -f5)
-forty_gb=40000000000
-clear
-
-wipe_disk=0
-if dialog --stdout --clear --yesno "Wipe disk?" 0 0; then
-    wipe_disk=1
+setup_disk=0
+if dialog --stdout --clear --yesno "Setup disk?" 0 0; then
+    setup_disk=1
 fi
 clear
+
+if [[ "$setup_disk" == "1" ]]; then
+    drive_password=$(dialog --stdout --passwordbox "Enter disk encryption password" 0 0) || exit 1
+    clear
+    : ${drive_password:?"disk encryption password cannot be empty"}
+    drive_password2=$(dialog --stdout --passwordbox "Enter disk encryption password again" 0 0) || exit 1
+    clear
+    [[ "$drive_password" == "$drive_password2" ]] || ( echo "Passwords did not match"; exit 1; )
+
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
+    device=$(dialog --stdout --menu "Select installtion disk" 0 0 0 ${devicelist}) || exit 1
+    device_size=$(fdisk -l | grep "Disk" | grep "${device}" | cut -d" " -f5)
+    clear
+
+    wipe_disk=0
+    if dialog --stdout --clear --yesno "Wipe disk?" 0 0; then
+        wipe_disk=1
+    fi
+    clear
+else
+    partlist=$(lsblk -plnx size -o name,size | grep -E "sd.[0-9]" | tac)
+    part_root=$(dialog --stdout --menu "Select partition with encrypted root" 0 0 0 ${partlist}) || exit 1
+    part_root_uuid="$(blkid --output value ${part_root} | head -n1)"
+    clear
+fi
 
 ### Set up logging ###
 exec 1> >(tee "stdout.log")
@@ -59,54 +71,66 @@ fi
 echo "Updating system clock"
 timedatectl set-ntp true
 
-### Set up the disk and partitions ###
-echo "Preparing disk"
-parted --script "${device}" -- \
-    mklabel msdos \
-    mkpart primary ext2 1Mib 257MiB \
-    set 1 boot on \
-    mkpart primary 257MiB 100%
+if [[ "$setup_disk" == "1" ]]; then
+    ### Set up the disk and partitions ###
+    echo "Preparing disk"
+    parted --script "${device}" -- \
+        mklabel msdos \
+        mkpart primary ext2 1Mib 257MiB \
+        set 1 boot on \
+        mkpart primary 257MiB 100%
 
-part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
-part_root="$(ls ${device}* | grep -E "^${device}p?2$")"
+    part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
+    part_root="$(ls ${device}* | grep -E "^${device}p?2$")"
 
-mkfs.ext2 "${part_boot}"
+    mkfs.ext2 "${part_boot}"
 
-### Wipe disk ###
-if [[ "$wipe_disk" == "1" ]]; then
-    echo "Wiping disk"
-    cryptsetup open --type plain "${part_root}" container --key-file /dev/random
-    dd if=/dev/zero of=/dev/mapper/container status=progress
-    cryptsetup close container
-fi
+    ### Wipe disk ###
+    if [[ "$wipe_disk" == "1" ]]; then
+        echo "Wiping disk"
+        cryptsetup open --type plain "${part_root}" container --key-file /dev/random
+        dd if=/dev/zero of=/dev/mapper/container status=progress
+        cryptsetup close container
+    fi
 
-### Set up disk encryption ###
-echo "Setting disk encryption"
-echo "${drive_password}" | cryptsetup luksFormat --type luks2 "${part_root}"
-echo "${drive_password}" | cryptsetup open "${part_root}" cryptolvm
-pvcreate /dev/mapper/cryptolvm
-vgcreate MyVol /dev/mapper/cryptolvm
-if [[ "${device_size}" -le "${forty_gb}" ]]; then
-    lvcreate -l 100%FREE MyVol -n root
-else
-    lvcreate -L 30G MyVol -n root
-    lvcreate -l 100%FREE MyVol -n home
-fi
-mapper_root=/dev/mapper/MyVol-root
-mkfs.ext4 "${mapper_root}"
-part_root_uuid="$(blkid --output value ${part_root} | head -n1)"
-if [[ "${device_size}" -gt "${forty_gb}" ]]; then
-    mapper_home=/dev/mapper/MyVol-home
-    mkfs.ext4 "${mapper_home}"
-fi
+    ### Set up disk encryption ###
+    echo "Setting disk encryption"
+    echo "${drive_password}" | cryptsetup luksFormat --type luks2 "${part_root}"
+    echo "${drive_password}" | cryptsetup open "${part_root}" cryptolvm
+    pvcreate /dev/mapper/cryptolvm
+    vgcreate MyVol /dev/mapper/cryptolvm
+    forty_gb=40000000000
+    if [[ "${device_size}" -le "${forty_gb}" ]]; then
+        lvcreate -l 100%FREE MyVol -n root
+    else
+        lvcreate -L 30G MyVol -n root
+        lvcreate -l 100%FREE MyVol -n home
+    fi
+    mapper_root=/dev/mapper/MyVol-root
+    mkfs.ext4 "${mapper_root}"
+    part_root_uuid="$(blkid --output value ${part_root} | head -n1)"
+    if [[ "${device_size}" -gt "${forty_gb}" ]]; then
+        mapper_home=/dev/mapper/MyVol-home
+        mkfs.ext4 "${mapper_home}"
+    fi
 
-echo "Mounting partitions"
-mount "${mapper_root}" /mnt
-mkdir /mnt/boot
-mount "${part_boot}" /mnt/boot
-if [[ "${device_size}" -gt "${forty_gb}" ]]; then
+    echo "Mounting partitions"
+    mount "${mapper_root}" /mnt
+    mkdir /mnt/boot
+    mount "${part_boot}" /mnt/boot
     mkdir /mnt/home
-    mount "${mapper_home}" /mnt/home
+    if [[ "${device_size}" -gt "${forty_gb}" ]]; then
+        mount "${mapper_home}" /mnt/home
+    fi
+fi
+
+if [[ ! -d /mnt/boot ]]; then
+        echo "Boot folder not found"
+        exit 1
+fi
+if [[ ! -d /mnt/home ]]; then
+        echo "Home folder not found"
+        exit 1
 fi
 
 ### Install and configure the basic system ###
@@ -146,6 +170,10 @@ sed -i -e 's/^HOOKS=\(.*\) block /HOOKS=\1 keyboard keymap block encrypt lvm2 /'
 arch-chroot /mnt mkinitcpio -p linux
 echo "Setting up bootloader"
 arch-chroot /mnt pacman --noconfirm -S --needed grub
+if [[ "$setup_disk" == "0" ]]; then
+    device=$(df | grep "/boot$" | cut -d" " -f1 | head -n1)
+    device=${device%?}
+fi
 arch-chroot /mnt grub-install --target=i386-pc "${device}"
 arch-chroot /mnt pacman --noconfirm -S --needed intel-ucode
 sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm:allow-discards root=/dev/mapper/MyVol-root\"#" /mnt/etc/default/grub
@@ -158,15 +186,17 @@ echo "${user}:${password}" | chpasswd --root /mnt
 echo "${user} ALL=(ALL:ALL) ALL" > /mnt/etc/sudoers.d/10_${user}
 passwd --root /mnt -l root
 
-echo "Setting up home encryption"
-modprobe ecryptfs
 arch-chroot /mnt pacman --noconfirm -S --needed rsync lsof ecryptfs-utils
-echo "${password}" | arch-chroot /mnt ecryptfs-migrate-home -u ${user}
-arch-chroot /mnt su -c exit -l ${user}
+if [[ "$setup_disk" == "1" ]]; then
+    echo "Setting up home encryption"
+    modprobe ecryptfs
+    echo "${password}" | arch-chroot /mnt ecryptfs-migrate-home -u ${user}
+    arch-chroot /mnt su -c exit -l ${user}
+    find /mnt/home -name "${user}.*" | xargs rm -rf
+fi
 sed -i -e '/^auth      required  pam_unix.so/aauth      required  pam_ecryptfs.so unwrap' /mnt/etc/pam.d/system-auth
 sed -i -e '/^password  required  pam_unix.so/ipassword  optional  pam_ecryptfs.so' /mnt/etc/pam.d/system-auth
 sed -i -e '/^session   required  pam_unix.so/asession   optional  pam_ecryptfs.so unwrap' /mnt/etc/pam.d/system-auth
-find /mnt/home -name "${user}.*" | xargs rm -rf
 
 ### Install networking packages ###
 echo "Installing wired networking packages"
