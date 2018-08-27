@@ -21,7 +21,7 @@
 # TODO gpg-agent, ssh-agent, bluetooth, mtp
 # TODO cups, rsyslogd, irqbalance, haveged, avahi, colord/xiccd
 # TODO intel-gpu-tools
-# TODO borgbackup, fzf, neofetch, tldr, youtube-dl, rust, go, tmuxp
+# TODO borgbackup, neofetch, tldr, youtube-dl, rust, go, tmuxp, fd, bat, ncdu
 # TODO ibus
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
