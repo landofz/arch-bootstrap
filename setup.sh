@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO make this script idempotent
 # TODO configure and start needed services:
 #    acpid
 # TODO finish power management
@@ -21,7 +22,7 @@
 # TODO gpg-agent, ssh-agent, bluetoothd, mtp
 # TODO cups, rsyslogd, irqbalance, haveged, avahi, colord/xiccd, accounts-daemon
 # TODO intel-gpu-tools
-# TODO borgbackup, neofetch, tldr, youtube-dl, rust, go, tmuxp, fd, bat, ncdu
+# TODO borgbackup, neofetch, tldr, youtube-dl, rust, go, tmuxp, fd, bat, ncdu, rclone
 # TODO ibus
 # TODO aria2, sox, ctags
 set -uo pipefail
