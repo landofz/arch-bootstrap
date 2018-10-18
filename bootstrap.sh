@@ -143,10 +143,13 @@ pacstrap /mnt base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "Configuring base system"
+### Networking ###
 echo "${hostname}" > /mnt/etc/hostname
 echo "127.0.1.1 ${hostname}.localdomain  ${hostname}" >> /mnt/etc/hosts
+### Time ###
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Zagreb /etc/localtime
 arch-chroot /mnt hwclock --systohc
+### Locales ###
 sed -i -e 's/^#en_US.UTF-8/en_US.UTF-8/' /mnt/etc/locale.gen
 sed -i -e 's/^#hr_HR.UTF-8/hr_HR.UTF-8/' /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
@@ -162,6 +165,7 @@ echo "LC_PAPER=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TELEPHONE=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TIME=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "a4" >> /mnt/etc/papersize
+### TRIM support ###
 sed -i -e 's/issue_discards = 0/issue_discards = 1/' /mnt/etc/lvm/lvm.conf
 
 ### Set up bootloader ###
