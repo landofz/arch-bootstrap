@@ -240,6 +240,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
 pushd dotfiles
 rm ~/.bashrc
+rm ~/.bash_logout
 stow -t ~/ bash
 source ~/.bashrc
 stow -t ~/ vim
@@ -249,4 +250,5 @@ stow -t ~/ tmux
 stow -t ~/ i3
 stow -t ~/ dunst
 stow -t ~/ fzf
+stow -t ~/ zathura
 popd
