@@ -106,7 +106,6 @@ sudo pacman --noconfirm -S --needed \
     xorg-xdpyinfo \
     xorg-xlsclients \
     xorg-xrandr \
-    xorg-xbacklight \
     xorg-setxkbmap \
     xorg-xmodmap \
     xorg-fonts-100dpi \
