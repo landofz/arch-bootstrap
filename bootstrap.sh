@@ -1,4 +1,8 @@
 #!/bin/bash
+# This script will bootstrap a new Arch installation on a machine. It assumes
+# the machine has an Intel CPU. The result is a bare bones system with
+# networking and a sudo capable initial user.
+
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -72,7 +76,7 @@ echo "Updating system clock"
 timedatectl set-ntp true
 
 if [[ "$setup_disk" == "1" ]]; then
-    ### Set up the disk and partitions ###
+    ### Set up disk and partitions ###
     echo "Preparing disk"
     parted --script "${device}" -- \
         mklabel msdos \
