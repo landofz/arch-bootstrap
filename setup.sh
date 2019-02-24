@@ -133,6 +133,7 @@ echo "Installing power management packages"
 # ThinkPads it is handled by EC automatically.
 sudo pacman --noconfirm -S --needed \
     acpid \
+    acpi \
     lm_sensors \
     cpupower \
     i7z \
