@@ -210,7 +210,9 @@ sudo pacman --noconfirm -S --needed \
 echo "Installing font packages"
 sudo pacman --noconfirm -S --needed \
     ttf-font-awesome
-yay -S --noconfirm --needed ttf-ubuntu-mono-derivative-powerline-git
+yay -S --noconfirm --needed \
+    ttf-ubuntu-mono-derivative-powerline-git \
+    nerd-fonts-ubuntu-mono
 
 echo "Installing documentation packages"
 sudo pacman --noconfirm -S --needed \
