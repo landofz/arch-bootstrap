@@ -7,14 +7,14 @@ hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
 clear
 : ${hostname:?"hostname cannot be empty"}
 
-user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
+user=$(dialog --stdout --inputbox "Enter main user username" 0 0) || exit 1
 clear
 : ${user:?"user cannot be empty"}
 
-password=$(dialog --stdout --passwordbox "Enter admin password" 0 0) || exit 1
+password=$(dialog --stdout --passwordbox "Enter main user password" 0 0) || exit 1
 clear
 : ${password:?"password cannot be empty"}
-password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || exit 1
+password2=$(dialog --stdout --passwordbox "Enter main user password again" 0 0) || exit 1
 clear
 [[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
@@ -33,7 +33,7 @@ if [[ "$setup_disk" == "1" ]]; then
     [[ "$drive_password" == "$drive_password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
-    device=$(dialog --stdout --menu "Select installtion disk" 0 0 0 ${devicelist}) || exit 1
+    device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
     device_size=$(fdisk -l | grep "Disk" | grep "${device}" | cut -d" " -f5)
     clear
 
