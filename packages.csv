@@ -1,9 +1,21 @@
+# bootstrap home encryption
+p,rsync
+p,lsof
+p,ecryptfs-utils
+
+# bootstrap networking
+p,ifplugd
+p,iw
+p,wpa_supplicant
+p,dialog
+p,wpa_actiond
+
+# utils
 p,acpi
 p,bat
 p,ctags
 p,gucharmap
 p,mpv
-a,nerd-fonts-ubuntu-mono
 p,nnn
 p,openssh
 p,rclone
@@ -12,3 +24,6 @@ p,vlc
 p,youtube-dl
 p,zathura
 p,zathura-pdf-poppler
+
+# fonts
+a,nerd-fonts-ubuntu-mono
