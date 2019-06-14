@@ -186,12 +186,13 @@ fi
 arch-chroot /mnt grub-install --target=i386-pc "${device}"
 arch-chroot /mnt pacman --noconfirm -S --needed intel-ucode
 sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm:allow-discards root=/dev/mapper/MyVol-root\"#" /mnt/etc/default/grub
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 # These mounts are needed as a workaround for grub-mkconfig bug
-mkdir /mnt/hostrun
-mount --bind /run /mnt/hostrun
-arch-chroot /mnt /bin/bash -c "mkdir /run/lvm && mount --bind /hostrun/lvm /run/lvm && grub-mkconfig -o /boot/grub/grub.cfg && umount /run/lvm && rmdir /run/lvm"
-umount /mnt/hostrun
-rmdir /mnt/hostrun
+#mkdir /mnt/hostrun
+#mount --bind /run /mnt/hostrun
+#arch-chroot /mnt /bin/bash -c "mkdir /run/lvm && mount --bind /hostrun/lvm /run/lvm && grub-mkconfig -o /boot/grub/grub.cfg && umount /run/lvm && rmdir /run/lvm"
+#umount /mnt/hostrun
+#rmdir /mnt/hostrun
 
 ### Set up users ###
 echo "Setting up users"
