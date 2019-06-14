@@ -195,7 +195,11 @@ rmdir /mnt/hostrun
 
 ### Set up users ###
 echo "Setting up users"
-arch-chroot /mnt useradd -mU "${user}"
+if [[ -d "/mnt/home/${user}" ]]; then
+    arch-chroot /mnt useradd --no-create-home --user-group --uid 1000 "${user}"
+else
+    arch-chroot /mnt useradd --create-home --user-group --uid 1000 "${user}"
+fi
 #echo "${user}:${password}" | chpasswd --root /mnt
 echo "${user}:${password}" | arch-chroot /mnt chpasswd
 echo "${user} ALL=(ALL:ALL) ALL" > /mnt/etc/sudoers.d/10_${user}
