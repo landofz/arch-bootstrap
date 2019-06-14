@@ -155,6 +155,7 @@ arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Zagreb /etc/localtime
 arch-chroot /mnt hwclock --systohc
 ### Locales ###
 sed -i -e 's/^#en_US.UTF-8/en_US.UTF-8/' /mnt/etc/locale.gen
+sed -i -e 's/^#en_GB.UTF-8/en_GB.UTF-8/' /mnt/etc/locale.gen
 sed -i -e 's/^#hr_HR.UTF-8/hr_HR.UTF-8/' /mnt/etc/locale.gen
 arch-chroot /mnt locale-gen
 echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
