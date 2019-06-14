@@ -217,7 +217,7 @@ sed -i -e '/^session   required  pam_unix.so/asession   optional  pam_ecryptfs.s
 echo "Installing wired networking packages"
 arch-chroot /mnt pacman --noconfirm -S --needed ifplugd
 echo "Installing WiFi packages"
-arch-chroot /mnt pacman --noconfirm -S --needed iw wpa_supplicant dialog wpa_actiond
+arch-chroot /mnt pacman --noconfirm -S --needed iw wpa_supplicant dialog
 echo "Creating netctl profiles"
 for dev in $(ip -brief link | cut -d" " -f1 | grep "^enp"); do
     echo "Detected network device: $dev"
