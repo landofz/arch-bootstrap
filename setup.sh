@@ -25,6 +25,7 @@
 # TODO borgbackup, neofetch, tldr, youtube-dl, rust, go, tmuxp, fd, bat, ncdu, rclone
 # TODO ibus
 # TODO aria2, sox, ctags, keychain, poppler
+# TODO irqbalance
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
