@@ -126,6 +126,15 @@ if [[ "$setup_disk" == "1" ]]; then
     if [[ "${device_size}" -gt "${forty_gb}" ]]; then
         mount "${mapper_home}" /mnt/home
     fi
+else
+    find /mnt -mindepth 1 -maxdepth 1 \
+        | grep -v "/boot$" \
+        | grep -v "/home$" \
+        | grep -v "/proc$" \
+        | grep -v "/sys$" \
+        | grep -v "/dev$" \
+        | xargs rm -rf
+    rm -rf /mnt/boot/*
 fi
 
 if [[ ! -d /mnt/boot ]]; then
