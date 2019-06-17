@@ -29,6 +29,8 @@
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
+cd ~
+
 ### Set up logging ###
 exec 1> >(tee "setup_stdout.log")
 exec 2> >(tee "setup_stderr.log")
@@ -230,15 +232,16 @@ sudo sensors-detect --auto
 
 pacman -Qqe > installed_packages.txt
 
-mkdir -p bin
-mkdir -p lib
+rm -f ~/.bash_profile
+mkdir -p ~/bin
+mkdir -p ~/lib
 git clone https://github.com/shannonmoeller/up.git ~/lib/up
 
-mkdir -p .config
-mkdir -p .local/share/applications
-mkdir -p .local/share/icons
-mkdir -p .vim/bundle
-mkdir -p .tmux/plugins
+mkdir -p ~/.config
+mkdir -p ~/.local/share/applications
+mkdir -p ~/.local/share/icons
+mkdir -p ~/.vim/bundle
+mkdir -p ~/.tmux/plugins
 git clone https://github.com/landofz/dotfiles.git
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm
