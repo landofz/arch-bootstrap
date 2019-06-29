@@ -60,6 +60,7 @@ fi
 
 echo "Installing core packages"
 sudo pacman --noconfirm -S --needed \
+    alacritty \
     git \
     bash-completion \
     stow \
@@ -67,7 +68,8 @@ sudo pacman --noconfirm -S --needed \
     python-pip \
     tmux \
     vim \
-    neovim
+    neovim \
+    elinks
 
 if ! command -v yay > /dev/null; then
     echo "Setting AUR helper"
@@ -188,6 +190,7 @@ sudo pacman --noconfirm -S --needed \
     dstat \
     lynx \
     jq \
+    exa \
     renameutils \
     run-parts \
     wmctrl \
@@ -203,6 +206,7 @@ sudo pacman --noconfirm -S --needed \
     xz \
     the_silver_searcher \
     fzf \
+    w3m \
     ufw
 sudo pacman --noconfirm -S --needed \
     redshift \
