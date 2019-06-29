@@ -18,7 +18,7 @@
 # TODO docker, docker-compose, virtualbox
 # TODO ripgrep, z.sh, up.sh
 # TODO gvm, virtualenv, virtualenvwrapper
-# TODO tig, zathura, command-not-found, zeal, diffoscope, syndaemon
+# TODO tig, zathura, command-not-found, zeal, diffoscope, syndaemon, fbreader
 # TODO gpg-agent, ssh-agent, bluetoothd, mtp
 # TODO cups, rsyslogd, irqbalance, haveged, avahi, colord/xiccd, accounts-daemon
 # TODO intel-gpu-tools
