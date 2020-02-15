@@ -26,6 +26,7 @@
 # TODO ibus
 # TODO aria2, sox, ctags, keychain, poppler
 # TODO irqbalance
+# TODO firejail
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
@@ -153,7 +154,10 @@ sudo pacman --noconfirm -S --needed \
     x86_energy_perf_policy \
     lsb-release \
     tlp
-sudo sed -i -e '/#STOP_CHARGE_THRESH_BAT1=80/a START_CHARGE_THRESH_BAT1=40\nSTOP_CHARGE_THRESH_BAT1=80' /etc/default/tlp
+# TODO: new TLP config from version 1.3.0 (/etc/tlp.conf)
+sudo sed -i -e '/#DEVICES_TO_DISABLE_ON_STARTUP="bluetooth wifi wwan"/a DEVICES_TO_DISABLE_ON_STARTUP="bluetooth wwan"' /etc/default/tlp
+sudo sed -i -e '/#STOP_CHARGE_THRESH_BAT0=80/a START_CHARGE_THRESH_BAT0=75\nSTOP_CHARGE_THRESH_BAT0=80' /etc/default/tlp
+sudo sed -i -e '/#STOP_CHARGE_THRESH_BAT1=80/a START_CHARGE_THRESH_BAT1=50\nSTOP_CHARGE_THRESH_BAT1=90' /etc/default/tlp
 sudo systemctl enable tlp.service
 sudo systemctl start tlp.service
 sudo systemctl enable tlp-sleep.service
