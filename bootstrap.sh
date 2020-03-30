@@ -152,7 +152,7 @@ curl "https://www.archlinux.org/mirrorlist/?country=AT&country=HR&country=DE&pro
 sed -i -e 's/#Server = /Server = /' /etc/pacman.d/mirrorlist
 
 echo "Installing base system"
-pacstrap /mnt base base-devel
+pacstrap /mnt base linux linux-firmware base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
 
 echo "Configuring base system"
