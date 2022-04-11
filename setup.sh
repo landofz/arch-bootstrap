@@ -59,6 +59,10 @@ if ! ping -c 2 google.com; then
     exit 1
 fi
 
+echo "Configuring periodic TRIM"
+sudo systemctl enable fstrim.timer
+sudo systemctl start fstrim.timer
+
 echo "Installing core packages"
 sudo pacman --noconfirm -S --needed \
     alacritty \
@@ -235,7 +239,6 @@ sudo pacman --noconfirm -S --needed \
     arch-wiki-docs
 
 amixer sset Master unmute
-sudo systemctl enable fstrim.timer
 sudo sensors-detect --auto
 
 pacman -Qqe > installed_packages.txt

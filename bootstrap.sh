@@ -180,7 +180,9 @@ echo "LC_TELEPHONE=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "LC_TIME=hr_HR.UTF-8" >> /mnt/etc/locale.conf
 echo "a4" >> /mnt/etc/papersize
 ### TRIM support ###
-sed -i -e 's/issue_discards = 0/issue_discards = 1/' /mnt/etc/lvm/lvm.conf
+# TRIM requests from arriving from filesystem level automatically are passed by
+# the logical volume to the physical volume. No config is necessary.
+# sed -i -e 's/issue_discards = 0/issue_discards = 1/' /mnt/etc/lvm/lvm.conf
 
 ### Set up bootloader ###
 echo "Configuring initramfs"
@@ -194,6 +196,7 @@ if [[ "$setup_disk" == "0" ]]; then
 fi
 arch-chroot /mnt grub-install --target=i386-pc "${device}"
 arch-chroot /mnt pacman --noconfirm -S --needed intel-ucode
+# https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD)
 sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm:allow-discards root=/dev/mapper/MyVol-root\"#" /mnt/etc/default/grub
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 # These mounts are needed as a workaround for grub-mkconfig bug
