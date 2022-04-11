@@ -169,6 +169,8 @@ sudo systemctl start tlp-sleep.service
 sudo systemctl mask systemd-rfkill.service
 sudo systemctl mask systemd-rfkill.socket
 sudo systemctl mask NetworkManager.service || true
+# https://www.smartmontools.org/wiki/Powermode
+# do not complain if a device is removed after smartd starts
 sudo sed -i -e '/^DEVICESCAN$/a DEVICESCAN -d removable -n standby' /etc/smartd.conf
 sudo sed -i -e 's/^DEVICESCAN$/#DEVICESCAN/' /etc/smartd.conf
 sudo systemctl enable smartd.service
