@@ -80,9 +80,9 @@ if [[ "$setup_disk" == "1" ]]; then
     echo "Preparing disk"
     parted --script "${device}" -- \
         mklabel msdos \
-        mkpart primary ext2 1Mib 257MiB \
+        mkpart primary ext2 1Mib 256MiB \
         set 1 boot on \
-        mkpart primary 257MiB 100%
+        mkpart primary 256MiB 100%
 
     part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
     part_root="$(ls ${device}* | grep -E "^${device}p?2$")"
