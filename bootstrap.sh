@@ -197,7 +197,7 @@ fi
 arch-chroot /mnt grub-install --target=i386-pc "${device}"
 arch-chroot /mnt pacman --noconfirm -S --needed intel-ucode
 # https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD)
-sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm:allow-discards root=/dev/mapper/MyVol-root\"#" /mnt/etc/default/grub
+sed -i -e "s#^GRUB_CMDLINE_LINUX_DEFAULT=\"\(.*\)\"#GRUB_CMDLINE_LINUX_DEFAULT=\"\1 cryptdevice=UUID=${part_root_uuid}:cryptlvm:allow-discards\"#" /mnt/etc/default/grub
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 # These mounts are needed as a workaround for grub-mkconfig bug
 #mkdir /mnt/hostrun
